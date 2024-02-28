@@ -80,7 +80,7 @@ with lib; {
           key = mkOption {
             type = types.str;
             description = "Key used to toggle transparency in emacs";
-            default = "M-<f7>";
+            default = "M-<f9>";
           };
           value = mkOption {
             type = types.int;
