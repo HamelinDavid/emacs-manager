@@ -52,6 +52,12 @@ with lib; {
         default = [];
       };
 
+      warning.minimum.level = mkOption {
+        type = types.str;
+        description = "Emacs's warning level (https://www.gnu.org/software/emacs/manual/html_node/elisp/Warning-Basics.html)";
+        default = "emergency"; # This isn't a very good idea, but it just makes the user experience better 
+      };
+      
       nix.enable = mkOption {
         type = types.bool;
         description = "Whether to enable nix-mode";
@@ -75,7 +81,7 @@ with lib; {
           enable = mkOption {
             type = types.bool; 
             description = "Whether to enable transparency in emacs";
-            default = true;
+            default = false; # I wanted to enable it by default because it looks cool, but in practice it causes problem
           };
           key = mkOption {
             type = types.str;
@@ -112,6 +118,7 @@ with lib; {
         ''
         (setq inhibit-startup-message t) 
         (setq initial-scratch-message nil)
+        (setq warning-minimum-level :${config.emacs.warning.minimum.level})
         '' + 
         (let cfg = config.emacs.ui.transparency; in if cfg.enable then
           ''
